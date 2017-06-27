@@ -14,8 +14,10 @@ public class Tweet {
     private String publisher;
     @Column(nullable = false, length = 2000)
     private String tweet;
-    @Column (nullable=true)
+    @Column(nullable = true)
     private Long pre2015MigrationStatus = 0L;
+    @Column(nullable = false)
+    private boolean discarted = false;
 
     public Tweet() {
     }
@@ -52,4 +54,11 @@ public class Tweet {
         this.pre2015MigrationStatus = pre2015MigrationStatus;
     }
 
+    public boolean isDiscarted() {
+        return discarted;
+    }
+
+    public void setDiscarted(boolean discarted) {
+        this.discarted = discarted;
+    }
 }

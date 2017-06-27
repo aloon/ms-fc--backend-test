@@ -1,11 +1,11 @@
-package com.scmspain.services;
+package com.scmspain.infrastructure;
 
 import com.scmspain.entities.Tweet;
 
 import java.util.List;
 
-public interface TweetService {
-    void publishTweet(String publisher, String text);
+public interface TweetRepository {
+    void save(Tweet tweet);
     Tweet getTweet(Long id);
     List<Tweet> listAllTweets();
     void discardTweet(long tweetId);

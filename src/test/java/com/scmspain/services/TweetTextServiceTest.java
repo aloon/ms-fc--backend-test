@@ -14,7 +14,7 @@ public class TweetTextServiceTest {
 
     @Before
     public void setUp() {
-        tweetTextService = new TweetTextService();
+        tweetTextService = new TweetTextServiceImp();
     }
 
     @Test
