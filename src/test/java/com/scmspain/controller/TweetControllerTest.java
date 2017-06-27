@@ -42,7 +42,7 @@ public class TweetControllerTest {
     }
 
     @Test
-    public void shouldReturn200WhenInsertingAValidTweetWithURLSuperant140Chars() throws Exception {
+    public void shouldReturn200WhenInsertingAValidTweetWithURLOvercoming140Chars() throws Exception {
         mockMvc.perform(newTweet("Schibsted Spain", "We are Schibsted Spain (look at our home page http://www.schibsted.es/), we own Vibbo, InfoJobs, fotocasa, coches.net and milanuncios. Welcome!"))
                 .andExpect(status().is(201));
     }
