@@ -28,7 +28,7 @@ public class TweetTextService {
             Pattern p = Pattern.compile(regexUrl);
             Matcher m = p.matcher(tweetText);
             if (m.find()) {
-                return m.replaceAll("").length() <= MAX_TWEET_LENGTH;
+                return m.replaceAll("").length() <= (MAX_TWEET_LENGTH - m.groupCount());
             } else {
                 return tweetText.length() <= MAX_TWEET_LENGTH;
             }

@@ -9,6 +9,7 @@ public class TweetTextServiceTest {
 
     private TweetTextService tweetTextService;
     private final String _140chars = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    private final String _136chars = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456";
     private final String URL = "http://foogle.co";
 
     @Before
@@ -38,6 +39,12 @@ public class TweetTextServiceTest {
     @Test
     public void valid_length_140_chars_and_url() throws Exception {
         tweetTextService.setTweetText(_140chars + URL);
+        assertThat(tweetTextService.isValidLength()).isFalse();
+    }
+
+    @Test
+    public void valid_length_136_chars_and_url() throws Exception {
+        tweetTextService.setTweetText(_136chars + URL);
         assertThat(tweetTextService.isValidLength()).isTrue();
     }
 
