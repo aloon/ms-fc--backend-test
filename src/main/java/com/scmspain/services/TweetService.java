@@ -16,10 +16,14 @@ import java.util.List;
 public class TweetService {
     private EntityManager entityManager;
     private MetricWriter metricWriter;
+    private TweetTextService tweetTextService;
 
-    public TweetService(EntityManager entityManager, MetricWriter metricWriter) {
+    public TweetService(EntityManager entityManager,
+                        MetricWriter metricWriter,
+                        TweetTextService tweetTextService) {
         this.entityManager = entityManager;
         this.metricWriter = metricWriter;
+        this.tweetTextService = tweetTextService;
     }
 
     /**
@@ -29,7 +33,8 @@ public class TweetService {
       Result - recovered Tweet
     */
     public void publishTweet(String publisher, String text) {
-        if (publisher != null && publisher.length() > 0 && text != null && text.length() > 0 && text.length() < 140) {
+        tweetTextService.setTweetText(text);
+        if (publisher != null && publisher.length() > 0 && tweetTextService.isValidLength()) {
             Tweet tweet = new Tweet();
             tweet.setTweet(text);
             tweet.setPublisher(publisher);

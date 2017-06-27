@@ -15,13 +15,15 @@ public class TweetServiceTest {
     private EntityManager entityManager;
     private MetricWriter metricWriter;
     private TweetService tweetService;
+    private TweetTextService tweetTextService;
 
     @Before
     public void setUp() throws Exception {
         this.entityManager = mock(EntityManager.class);
         this.metricWriter = mock(MetricWriter.class);
+        this.tweetTextService = new TweetTextService();
 
-        this.tweetService = new TweetService(entityManager, metricWriter);
+        this.tweetService = new TweetService(entityManager, metricWriter, tweetTextService);
     }
 
     @Test
