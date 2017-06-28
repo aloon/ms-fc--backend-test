@@ -65,6 +65,16 @@ To publish a new tweet
 curl -XPOST -d '{ "publisher": "Prospect", "tweet": "Breaking the law" }' -H 'Content-Type: application/json' http://localhost:8080/tweet
 ```
 
+To discard a new tweet
+```sh
+curl -XPOST -d '{ "tweet": "%TWEET_ID%" }'  -H 'Content-Type: application/json' http://localhost:8080/discarded
+```
+
+To get all published tweets
+```sh
+curl http://localhost:8080/discarded
+```
+
 ## Test
 
 From the application folder, run
