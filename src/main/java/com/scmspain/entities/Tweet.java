@@ -1,8 +1,6 @@
 package com.scmspain.entities;
 
 import javax.persistence.*;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -14,7 +12,7 @@ public class Tweet {
     private String publisher;
     @Column(nullable = false, length = 2000)
     private String tweet;
-    @Column(nullable = true)
+    @Column()
     private Long pre2015MigrationStatus = 0L;
     @Column(nullable = false)
     private boolean discarted = false;

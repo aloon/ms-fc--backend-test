@@ -4,7 +4,7 @@ import org.springframework.boot.actuate.metrics.writer.Delta;
 import org.springframework.boot.actuate.metrics.writer.MetricWriter;
 
 public class StatisticsServiceImp implements StatisticsService {
-    private MetricWriter metricWriter;
+    private final MetricWriter metricWriter;
 
     public StatisticsServiceImp(MetricWriter metricWriter) {
         this.metricWriter = metricWriter;

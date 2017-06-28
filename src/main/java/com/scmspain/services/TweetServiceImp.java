@@ -2,23 +2,18 @@ package com.scmspain.services;
 
 import com.scmspain.entities.Tweet;
 import com.scmspain.infrastructure.TweetRepository;
-import org.springframework.boot.actuate.metrics.writer.Delta;
-import org.springframework.boot.actuate.metrics.writer.MetricWriter;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional
 public class TweetServiceImp implements TweetService {
 
-    private TweetTextService tweetTextService;
-    private TweetRepository tweetRepository;
-    private StatisticsService statisticsService;
+    private final TweetTextService tweetTextService;
+    private final TweetRepository tweetRepository;
+    private final StatisticsService statisticsService;
 
     public TweetServiceImp(TweetTextService tweetTextService,
                            TweetRepository tweetRepository,
@@ -53,7 +48,7 @@ public class TweetServiceImp implements TweetService {
      * Parameter - id - id of the Tweet to retrieve
      * Result - retrieved Tweet
      */
-    public Tweet getTweet(Long id) {
+    private Tweet getTweet(Long id) {
         return tweetRepository.getTweet(id);
     }
 

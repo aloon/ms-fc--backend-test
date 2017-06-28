@@ -4,12 +4,11 @@ import com.scmspain.entities.Tweet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TweetRepositoryImp implements TweetRepository {
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public TweetRepositoryImp(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -30,7 +29,7 @@ public class TweetRepositoryImp implements TweetRepository {
         TypedQuery<Long> query = this.entityManager.createQuery("SELECT id FROM Tweet AS tweetId WHERE pre2015MigrationStatus<>99 and discarted=false ORDER BY creationDate DESC", Long.class);
         return query.getResultList()
                 .stream()
-                .map(t -> getTweet(t.longValue()))
+                .map(this::getTweet)
                 .collect(Collectors.toList());
     }
 
@@ -47,7 +46,7 @@ public class TweetRepositoryImp implements TweetRepository {
         TypedQuery<Long> query = this.entityManager.createQuery("SELECT id FROM Tweet AS tweetId WHERE pre2015MigrationStatus<>99 and discarted=true ORDER BY discardDate ", Long.class);
         return query.getResultList()
                 .stream()
-                .map(t -> getTweet(t.longValue()))
+                .map(this::getTweet)
                 .collect(Collectors.toList());
     }
 }

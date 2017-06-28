@@ -8,8 +8,7 @@ import java.util.regex.Pattern;
 
 @Service
 @Transactional
-public class TweetTextServiceImp implements TweetTextService{
-    private final int MAX_TWEET_LENGTH = 140;
+public class TweetTextServiceImp implements TweetTextService {
     private String tweetText;
 
     public String getTweetText() {
@@ -21,6 +20,7 @@ public class TweetTextServiceImp implements TweetTextService{
     }
 
     public boolean isValidLength() {
+        final int MAX_TWEET_LENGTH = 140;
         if (tweetText == null || tweetText.isEmpty()) {
             return false;
         } else {
