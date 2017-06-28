@@ -3,10 +3,8 @@ package com.scmspain.infrastructure;
 import com.scmspain.entities.Tweet;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TweetRepositoryImp implements TweetRepository {
     private final EntityManager entityManager;
@@ -20,35 +18,36 @@ public class TweetRepositoryImp implements TweetRepository {
         this.entityManager.persist(tweet);
     }
 
-    @Override
     public Tweet getTweet(Long id) {
         return this.entityManager.find(Tweet.class, id);
     }
 
     @Override
     public List<Tweet> listAllTweets() {
-        TypedQuery<Long> query = this.entityManager.createQuery("SELECT id FROM Tweet AS tweetId WHERE pre2015MigrationStatus<>99 and discarted=false ORDER BY creationDate DESC", Long.class);
-        return query.getResultList()
-                .stream()
-                .map(this::getTweet)
-                .collect(Collectors.toList());
+        return listTweet(false);
     }
 
     @Override
     public void discardTweet(long tweetId) {
-        Tweet tweet = this.entityManager.find(Tweet.class, tweetId);
+        Tweet tweet = getTweet(tweetId);
         tweet.setDiscarted(true);
         tweet.setDiscardDate(new Date());
         this.entityManager.persist(tweet);
     }
 
-
     @Override
     public List<Tweet> listDiscardTweet() {
-        TypedQuery<Long> query = this.entityManager.createQuery("SELECT id FROM Tweet AS tweetId WHERE pre2015MigrationStatus<>99 and discarted=true ORDER BY discardDate ", Long.class);
-        return query.getResultList()
-                .stream()
-                .map(this::getTweet)
-                .collect(Collectors.toList());
+        return listTweet(true);
     }
+
+    private List<Tweet> listTweet(boolean discarted) {
+        final String order = discarted ? "discardDate" : "creationDate";
+        final String jql = "FROM Tweet WHERE pre2015MigrationStatus<>99 and discarted=:discarted ORDER BY " + order;
+
+        return this.entityManager
+                .createQuery(jql, Tweet.class)
+                .setParameter("discarted", discarted)
+                .getResultList();
+    }
+
 }
