@@ -30,7 +30,7 @@ public class TweetRepositoryImp implements TweetRepository {
     @Override
     public void discardTweet(long tweetId) {
         Tweet tweet = getTweet(tweetId);
-        tweet.setDiscarted(true);
+        tweet.setDiscarded(true);
         tweet.setDiscardDate(new Date());
         this.entityManager.persist(tweet);
     }
@@ -40,13 +40,13 @@ public class TweetRepositoryImp implements TweetRepository {
         return listTweet(true);
     }
 
-    private List<Tweet> listTweet(boolean discarted) {
-        final String order = discarted ? "discardDate" : "creationDate";
-        final String jql = "FROM Tweet WHERE pre2015MigrationStatus<>99 and discarted=:discarted ORDER BY " + order;
+    private List<Tweet> listTweet(boolean discarded) {
+        final String order = discarded ? "discardDate" : "creationDate";
+        final String jql = "FROM Tweet WHERE pre2015MigrationStatus<>99 and discarded=:discarded ORDER BY " + order;
 
         return this.entityManager
                 .createQuery(jql, Tweet.class)
-                .setParameter("discarted", discarted)
+                .setParameter("discarded", discarded)
                 .getResultList();
     }
 

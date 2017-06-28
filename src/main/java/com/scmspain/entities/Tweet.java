@@ -15,7 +15,7 @@ public class Tweet {
     @Column()
     private Long pre2015MigrationStatus = 0L;
     @Column(nullable = false)
-    private boolean discarted = false;
+    private boolean discarded = false;
     @Column()
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
@@ -58,12 +58,12 @@ public class Tweet {
         this.pre2015MigrationStatus = pre2015MigrationStatus;
     }
 
-    public boolean isDiscarted() {
-        return discarted;
+    public boolean isDiscarded() {
+        return discarded;
     }
 
-    public void setDiscarted(boolean discarted) {
-        this.discarted = discarted;
+    public void setDiscarded(boolean discarded) {
+        this.discarded = discarded;
     }
 
     public Date getCreationDate() {
