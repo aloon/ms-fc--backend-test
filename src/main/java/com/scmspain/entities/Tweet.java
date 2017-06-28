@@ -1,9 +1,9 @@
 package com.scmspain.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Tweet {
@@ -18,6 +18,12 @@ public class Tweet {
     private Long pre2015MigrationStatus = 0L;
     @Column(nullable = false)
     private boolean discarted = false;
+    @Column()
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
+    @Column()
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date discardDate;
 
     public Tweet() {
     }
@@ -60,5 +66,21 @@ public class Tweet {
 
     public void setDiscarted(boolean discarted) {
         this.discarted = discarted;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getDiscardDate() {
+        return discardDate;
+    }
+
+    public void setDiscardDate(Date discardDate) {
+        this.discardDate = discardDate;
     }
 }
