@@ -41,4 +41,15 @@ public class TweetRepositoryImp implements TweetRepository {
         tweet.setDiscarted(true);
         this.entityManager.persist(tweet);
     }
+
+    @Override
+    public List<Tweet> listDiscardTweet() {
+        List<Tweet> result = new ArrayList<Tweet>();
+        TypedQuery<Long> query = this.entityManager.createQuery("SELECT id FROM Tweet AS tweetId WHERE pre2015MigrationStatus<>99 and discarted=true ORDER BY id DESC", Long.class);
+        List<Long> ids = query.getResultList();
+        for (Long id : ids) {
+            result.add(getTweet(id));
+        }
+        return result;
+    }
 }

@@ -35,6 +35,14 @@ public class TweetServiceTest {
         final long tweetToDiscard = 123;
         tweetService.discardTweet(tweetToDiscard);
         verify(tweetRepository, times(1)).discardTweet(tweetToDiscard);
+        verify(statisticsService, times(1)).incrementDiscartedTweets();
+    }
+
+    @Test
+    public void shouldListDiscardTweets() throws Exception {
+        tweetService.listDiscardTweet();
+        verify(tweetRepository, times(1)).listDiscardTweet();
+        verify(statisticsService, times(1)).incrementQueriedDiscartedTweets();
     }
 
     @Test(expected = IllegalArgumentException.class)

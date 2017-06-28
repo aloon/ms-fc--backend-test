@@ -6,7 +6,12 @@ import java.util.List;
 
 public interface TweetService {
     void publishTweet(String publisher, String text);
+
     Tweet getTweet(Long id);
+
     List<Tweet> listAllTweets();
+
     void discardTweet(long tweetId);
+
+    List<Tweet> listDiscardTweet();
 }

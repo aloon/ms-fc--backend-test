@@ -68,6 +68,13 @@ public class TweetServiceImp implements TweetService {
     }
 
     public void discardTweet(long tweetId) {
+        statisticsService.incrementDiscartedTweets();
         tweetRepository.discardTweet(tweetId);
+    }
+
+    @Override
+    public List<Tweet> listDiscardTweet() {
+        statisticsService.incrementQueriedDiscartedTweets();
+        return tweetRepository.listDiscardTweet();
     }
 }

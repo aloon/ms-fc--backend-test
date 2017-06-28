@@ -105,8 +105,34 @@ public class TweetControllerTest {
         assertThat(getTweetsFromList().stream().filter(t -> t.getId() == tweetToDiscard).count()).isEqualTo(0);
     }
 
+    @Test
+    public void getDiscardTweets() throws Exception {
+
+        mockMvc.perform(newTweet("Prospect", "Breaking the law"))
+                .andExpect(status().is(201));
+
+        long tweetToDiscard = getTweetsFromList().get(0).getId();
+
+        mockMvc.perform(discardTweet(tweetToDiscard))
+                .andExpect(status().is(201));
+
+        mockMvc.perform(listDiscardTweets())
+                .andExpect(status().is(200));
+
+        assertThat(getDiscardTweetsFromList().stream().filter(t -> t.getId() == tweetToDiscard).count()).isEqualTo(1);
+    }
+
     private List<Tweet> getTweetsFromList() throws Exception {
         MvcResult getResult = mockMvc.perform(get("/tweet"))
+                .andExpect(status().is(200))
+                .andReturn();
+        String content = getResult.getResponse().getContentAsString();
+        return new ObjectMapper().readValue(content, new TypeReference<List<Tweet>>() {
+        });
+    }
+
+    private List<Tweet> getDiscardTweetsFromList() throws Exception {
+        MvcResult getResult = mockMvc.perform(get("/discarded"))
                 .andExpect(status().is(200))
                 .andReturn();
         String content = getResult.getResponse().getContentAsString();
@@ -124,6 +150,10 @@ public class TweetControllerTest {
         return post("/discarded")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(format("{\"tweet\": \"%s\"}", tweetId));
+    }
+
+    private MockHttpServletRequestBuilder listDiscardTweets() {
+        return get("/discarded");
     }
 
 }

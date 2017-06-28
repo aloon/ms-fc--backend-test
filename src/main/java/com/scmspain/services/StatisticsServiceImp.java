@@ -19,4 +19,14 @@ public class StatisticsServiceImp implements StatisticsService {
     public void incrementQueriedTweets() {
         this.metricWriter.increment(new Delta<Number>("times-queried-tweets", 1));
     }
+
+    @Override
+    public void incrementDiscartedTweets() {
+        this.metricWriter.increment(new Delta<Number>("discarted-tweets", 1));
+    }
+
+    @Override
+    public void incrementQueriedDiscartedTweets() {
+        this.metricWriter.increment(new Delta<Number>("times-queried-discarted-tweets", 1));
+    }
 }
