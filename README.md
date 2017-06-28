@@ -70,7 +70,7 @@ To discard a new tweet
 curl -XPOST -d '{ "tweet": "%TWEET_ID%" }'  -H 'Content-Type: application/json' http://localhost:8080/discarded
 ```
 
-To get all published tweets
+To get all discarded tweets
 ```sh
 curl http://localhost:8080/discarded
 ```
