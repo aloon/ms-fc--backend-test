@@ -3,10 +3,7 @@ package com.scmspain.configuration;
 import com.scmspain.controller.TweetController;
 import com.scmspain.infrastructure.TweetRepository;
 import com.scmspain.infrastructure.TweetRepositoryImp;
-import com.scmspain.services.TweetService;
-import com.scmspain.services.TweetServiceImp;
-import com.scmspain.services.TweetTextService;
-import com.scmspain.services.TweetTextServiceImp;
+import com.scmspain.services.*;
 import org.springframework.boot.actuate.metrics.writer.MetricWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +13,8 @@ import javax.persistence.EntityManager;
 @Configuration
 public class TweetConfiguration {
     @Bean
-    public TweetService getTweetService(MetricWriter metricWriter, TweetTextService tweetTextService, TweetRepository tweetRepository) {
-        return new TweetServiceImp(metricWriter, tweetTextService, tweetRepository);
+    public TweetService getTweetService(TweetTextService tweetTextService, TweetRepository tweetRepository, StatisticsService statisticsService) {
+        return new TweetServiceImp(tweetTextService, tweetRepository, statisticsService);
     }
 
     @Bean
@@ -33,5 +30,10 @@ public class TweetConfiguration {
     @Bean
     public TweetRepository getTweetRepository(EntityManager entityManager){
         return new TweetRepositoryImp(entityManager);
+    }
+
+    @Bean
+    public StatisticsService getStatisticsService(MetricWriter metricWriter){
+        return new StatisticsServiceImp(metricWriter);
     }
 }

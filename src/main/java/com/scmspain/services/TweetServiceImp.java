@@ -15,18 +15,17 @@ import java.util.List;
 @Service
 @Transactional
 public class TweetServiceImp implements TweetService {
-    private EntityManager entityManager;
-    private MetricWriter metricWriter;
+
     private TweetTextService tweetTextService;
     private TweetRepository tweetRepository;
+    private StatisticsService statisticsService;
 
-    public TweetServiceImp(MetricWriter metricWriter,
-                           TweetTextService tweetTextService,
-                           TweetRepository tweetRepository) {
-        this.entityManager = entityManager;
-        this.metricWriter = metricWriter;
+    public TweetServiceImp(TweetTextService tweetTextService,
+                           TweetRepository tweetRepository,
+                           StatisticsService statisticsService) {
         this.tweetTextService = tweetTextService;
         this.tweetRepository = tweetRepository;
+        this.statisticsService = statisticsService;
     }
 
     /**
@@ -42,9 +41,8 @@ public class TweetServiceImp implements TweetService {
             tweet.setTweet(text);
             tweet.setPublisher(publisher);
 
-            this.metricWriter.increment(new Delta<Number>("published-tweets", 1));
-            //this.entityManager.persist(tweet);
             tweetRepository.save(tweet);
+            statisticsService.incrementPublishedTweets();
         } else {
             throw new IllegalArgumentException("Tweet must not be greater than 140 characters");
         }
@@ -65,8 +63,7 @@ public class TweetServiceImp implements TweetService {
      * Result - retrieved Tweet
      */
     public List<Tweet> listAllTweets() {
-        this.metricWriter.increment(new Delta<Number>("times-queried-tweets", 1));
-
+        statisticsService.incrementQueriedTweets();
         return tweetRepository.listAllTweets();
     }
 
