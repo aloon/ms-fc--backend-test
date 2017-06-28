@@ -5,6 +5,7 @@ import com.scmspain.infrastructure.TweetRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +35,7 @@ public class TweetServiceImp implements TweetService {
         if (publisher != null && publisher.length() > 0 && tweetTextService.isValidLength()) {
             Tweet tweet = new Tweet();
             tweet.setTweet(text);
+            tweet.setCreationDate(new Date());
             tweet.setPublisher(publisher);
 
             tweetRepository.save(tweet);

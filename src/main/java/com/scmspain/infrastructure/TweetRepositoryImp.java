@@ -4,6 +4,7 @@ import com.scmspain.entities.Tweet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,7 @@ public class TweetRepositoryImp implements TweetRepository {
     public void discardTweet(long tweetId) {
         Tweet tweet = this.entityManager.find(Tweet.class, tweetId);
         tweet.setDiscarted(true);
+        tweet.setDiscardDate(new Date());
         this.entityManager.persist(tweet);
     }
 
