@@ -18,13 +18,13 @@ public class TweetRepositoryImp implements TweetRepository {
         this.entityManager.persist(tweet);
     }
 
-    private Tweet getTweet(Long id) {
+    protected Tweet getTweet(Long id) {
         return this.entityManager.find(Tweet.class, id);
     }
 
     @Override
     public List<Tweet> listAllTweets() {
-        return listTweet(false);
+        return listTweets(false);
     }
 
     @Override
@@ -37,10 +37,10 @@ public class TweetRepositoryImp implements TweetRepository {
 
     @Override
     public List<Tweet> listDiscardTweet() {
-        return listTweet(true);
+        return listTweets(true);
     }
 
-    private List<Tweet> listTweet(boolean discarded) {
+    protected List<Tweet> listTweets(boolean discarded) {
         final String order = discarded ? "discardDate" : "creationDate";
         final String jql = "FROM Tweet WHERE pre2015MigrationStatus<>99 and discarded=:discarded ORDER BY " + order;
 
