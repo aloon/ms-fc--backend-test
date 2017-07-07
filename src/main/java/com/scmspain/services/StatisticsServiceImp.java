@@ -3,6 +3,8 @@ package com.scmspain.services;
 import org.springframework.boot.actuate.metrics.writer.Delta;
 import org.springframework.boot.actuate.metrics.writer.MetricWriter;
 
+import java.util.concurrent.CompletableFuture;
+
 public class StatisticsServiceImp implements StatisticsService {
     private final MetricWriter metricWriter;
 
@@ -12,21 +14,30 @@ public class StatisticsServiceImp implements StatisticsService {
 
     @Override
     public void incrementPublishedTweets() {
-        this.metricWriter.increment(new Delta<Number>("published-tweets", 1));
+        incrementAsync("published-tweets");
     }
 
     @Override
     public void incrementQueriedTweets() {
-        this.metricWriter.increment(new Delta<Number>("times-queried-tweets", 1));
+        incrementAsync("times-queried-tweets");
     }
 
     @Override
     public void incrementDiscardedTweets() {
-        this.metricWriter.increment(new Delta<Number>("discarded-tweets", 1));
+        incrementAsync("discarded-tweets");
     }
 
     @Override
     public void incrementQueriedDiscardedTweets() {
-        this.metricWriter.increment(new Delta<Number>("times-queried-discarded-tweets", 1));
+        incrementAsync("times-queried-discarded-tweets");
     }
+
+    private void incrementAsync(String key) {
+        CompletableFuture.runAsync(() -> increment(key, this.metricWriter));
+    }
+
+    private static void increment(String key, MetricWriter metricWriter) {
+        metricWriter.increment(new Delta<Number>(key, 1));
+    }
+
 }
