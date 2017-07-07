@@ -50,15 +50,6 @@ public class TweetServiceImp implements TweetService {
      * Parameter - id - id of the Tweet to retrieve
      * Result - retrieved Tweet
      */
-    private Tweet getTweet(Long id) {
-        return tweetRepository.getTweet(id);
-    }
-
-    /**
-     * Recover tweet from repository
-     * Parameter - id - id of the Tweet to retrieve
-     * Result - retrieved Tweet
-     */
     public List<Tweet> listAllTweets() {
         statisticsService.incrementQueriedTweets();
         return tweetRepository.listAllTweets();
