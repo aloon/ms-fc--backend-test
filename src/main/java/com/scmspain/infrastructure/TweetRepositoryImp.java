@@ -18,7 +18,7 @@ public class TweetRepositoryImp implements TweetRepository {
         this.entityManager.persist(tweet);
     }
 
-    public Tweet getTweet(Long id) {
+    private Tweet getTweet(Long id) {
         return this.entityManager.find(Tweet.class, id);
     }
 
