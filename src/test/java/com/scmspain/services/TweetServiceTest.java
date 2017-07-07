@@ -35,7 +35,7 @@ public class TweetServiceTest {
         final long tweetToDiscard = 123;
         tweetService.discardTweet(tweetToDiscard);
         verify(tweetRepository, times(1)).discardTweet(tweetToDiscard);
-        verify(statisticsService, times(1)).incrementDiscardedTweets();
+        verify(statisticsService, times(1)).decreasePublishedTweets();
     }
 
     @Test

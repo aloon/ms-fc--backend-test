@@ -56,7 +56,7 @@ public class TweetServiceImp implements TweetService {
     }
 
     public void discardTweet(long tweetId) {
-        statisticsService.incrementDiscardedTweets();
+        statisticsService.decreasePublishedTweets();
         tweetRepository.discardTweet(tweetId);
     }
 

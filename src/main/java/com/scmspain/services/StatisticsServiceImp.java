@@ -14,30 +14,30 @@ public class StatisticsServiceImp implements StatisticsService {
 
     @Override
     public void incrementPublishedTweets() {
-        incrementAsync("published-tweets");
+        incrementAsync("published-tweets", 1);
     }
 
     @Override
     public void incrementQueriedTweets() {
-        incrementAsync("times-queried-tweets");
+        incrementAsync("times-queried-tweets", 1);
     }
 
     @Override
-    public void incrementDiscardedTweets() {
-        incrementAsync("discarded-tweets");
+    public void decreasePublishedTweets() {
+        incrementAsync("published-tweets", -1);
     }
 
     @Override
     public void incrementQueriedDiscardedTweets() {
-        incrementAsync("times-queried-discarded-tweets");
+        incrementAsync("times-queried-discarded-tweets", 1);
     }
 
-    private void incrementAsync(String key) {
-        CompletableFuture.runAsync(() -> increment(key, this.metricWriter));
+    private void incrementAsync(String key, int value) {
+        CompletableFuture.runAsync(() -> increment(key, value, this.metricWriter));
     }
 
-    private static void increment(String key, MetricWriter metricWriter) {
-        metricWriter.increment(new Delta<Number>(key, 1));
+    private static void increment(String key, int value, MetricWriter metricWriter) {
+        metricWriter.increment(new Delta<Number>(key, value));
     }
 
 }
