@@ -7,6 +7,7 @@ import org.junit.Test;
 import javax.persistence.EntityManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -64,11 +65,9 @@ public class TweetRepositoryImpTest {
 
         @Override
         protected List<Tweet> listTweets(boolean discarded) {
-            List<Tweet> tweets = new ArrayList<>();
             Tweet tweet = new Tweet();
             tweet.setTweet(discarded ? "discarded tweet" : "tweet");
-            tweets.add(tweet);
-            return tweets;
+            return Arrays.asList(tweet);
         }
 
         @Override
